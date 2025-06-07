@@ -1,8 +1,14 @@
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import './Header.css';
 
 export default function Header() {
   const location = useLocation();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    localStorage.removeItem('access_token');
+    navigate('/login');
+  };
 
   return (
     <header className="app-header">
@@ -21,12 +27,12 @@ export default function Header() {
           >
             All-Time Scores
           </Link>
-          <Link 
-            to="/login" 
+          <button 
+            onClick={handleLogout}
             className="nav-link logout"
           >
             Logout
-          </Link>
+          </button>
         </nav>
       </div>
     </header>
