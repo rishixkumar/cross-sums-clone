@@ -1,0 +1,201 @@
+.login-page {
+    min-height: calc(100vh - 80px);
+    background: linear-gradient(135deg, #d4e6f1 0%, #e9f3fa 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+  }
+  
+  .login-container {
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    padding: 3rem;
+    width: 100%;
+    max-width: 400px;
+  }
+  
+  .login-header {
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+  
+  .login-header h1 {
+    font-family: 'Bebas Neue', Arial, sans-serif;
+    font-size: 2.5rem;
+    color: #2c3e50;
+    margin-bottom: 0.5rem;
+    letter-spacing: 1px;
+  }
+  
+  .login-header p {
+    font-family: 'Old Standard TT', serif;
+    color: #7f8c8d;
+    font-size: 1rem;
+    margin: 0;
+  }
+  
+  .login-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .form-group label {
+    font-family: 'Old Standard TT', serif;
+    font-weight: 600;
+    color: #2c3e50;
+    font-size: 1rem;
+  }
+  
+  .form-group input {
+    padding: 1rem;
+    border: 2px solid #e9f3fa;
+    border-radius: 12px;
+    font-family: 'Old Standard TT', serif;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    background: #fafbfc;
+  }
+  
+  .form-group input:focus {
+    outline: none;
+    border-color: #4e9af1;
+    box-shadow: 0 0 0 3px rgba(78, 154, 241, 0.1);
+    background: white;
+  }
+  
+  .form-group input.error {
+    border-color: #ff6b6b;
+    background: #fff5f5;
+  }
+  
+  .field-error {
+    color: #ff6b6b;
+    font-size: 0.875rem;
+    font-family: 'Old Standard TT', serif;
+  }
+  
+  .password-hint {
+    font-size: 0.95rem;
+    color: #4e9af1;
+    font-family: 'Old Standard TT', serif;
+    margin-top: 0.25rem;
+    margin-bottom: -0.5rem;
+    background: rgba(233,243,250,0.5);
+    border-radius: 6px;
+    padding: 0.2rem 0.7rem;
+    transition: background 0.2s;
+  }
+  
+  .see-password-row {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 0.3rem;
+    margin-bottom: -0.3rem;
+    user-select: none;
+  }
+  
+  .see-password-checkbox {
+    accent-color: #4e9af1;
+    width: 1.1em;
+    height: 1.1em;
+    border-radius: 4px;
+    transition: box-shadow 0.2s, accent-color 0.2s;
+    box-shadow: 0 0 0 0 #4e9af1;
+  }
+  
+  .see-password-checkbox:checked {
+    box-shadow: 0 0 6px 2px #4e9af1aa;
+    accent-color: #3b82d9;
+  }
+  
+  .see-password-label {
+    font-size: 0.98rem;
+    color: #4e9af1;
+    font-family: 'Old Standard TT', serif;
+    cursor: pointer;
+    transition: color 0.18s;
+  }
+  
+  .see-password-checkbox:checked + .see-password-label {
+    color: #3b82d9;
+  }
+  
+  .error-message {
+    background: #fff5f5;
+    color: #ff6b6b;
+    padding: 1rem;
+    border-radius: 8px;
+    border: 1px solid #fecaca;
+    font-family: 'Old Standard TT', serif;
+    text-align: center;
+  }
+  
+  .submit-button {
+    background: #4e9af1;
+    color: white;
+    border: none;
+    padding: 1rem 2rem;
+    border-radius: 12px;
+    font-family: 'Old Standard TT', serif;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 1rem;
+  }
+  
+  .submit-button:hover:not(:disabled) {
+    background: #3b82d9;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(78, 154, 241, 0.3);
+  }
+  
+  .submit-button:disabled {
+    background: #bdc3c7;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+  }
+  
+  .login-footer {
+    text-align: center;
+    margin-top: 2rem;
+    padding-top: 2rem;
+    border-top: 1px solid #ecf0f1;
+  }
+  
+  .login-footer p {
+    font-family: 'Old Standard TT', serif;
+    color: #7f8c8d;
+    margin: 0;
+  }
+  
+  .link-button {
+    background: none;
+    border: none;
+    color: #4e9af1;
+    font-family: 'Old Standard TT', serif;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: underline;
+  }
+  
+  .link-button:hover:not(:disabled) {
+    color: #3b82d9;
+  }
+  
+  .link-button:disabled {
+    color: #bdc3c7;
+    cursor: not-allowed;
+  }
+  

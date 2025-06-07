@@ -1,0 +1,191 @@
+.profile-page {
+    min-height: calc(100vh - 80px);
+    background: linear-gradient(135deg, #d4e6f1 0%, #e9f3fa 100%);
+    padding: 2rem;
+  }
+  
+  .profile-container {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  
+  .profile-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+  }
+  
+  .profile-header h1 {
+    font-family: 'Bebas Neue', Arial, sans-serif;
+    font-size: 2.5rem;
+    color: #2c3e50;
+    margin: 0;
+    letter-spacing: 1px;
+  }
+  
+  .logout-button {
+    background: #ff6b6b;
+    color: white;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 12px;
+    font-family: 'Old Standard TT', serif;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .logout-button:hover {
+    background: #ff5252;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(255, 107, 107, 0.3);
+  }
+  
+  .profile-content {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+  
+  .profile-card {
+    background: white;
+    border-radius: 20px;
+    padding: 2rem;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  }
+  
+  .profile-info h2 {
+    font-family: 'Bebas Neue', Arial, sans-serif;
+    font-size: 1.8rem;
+    color: #2c3e50;
+    margin-bottom: 1.5rem;
+    letter-spacing: 0.5px;
+  }
+  
+  .info-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 0;
+    border-bottom: 1px solid #ecf0f1;
+  }
+  
+  .info-row:last-child {
+    border-bottom: none;
+  }
+  
+  .label {
+    font-family: 'Old Standard TT', serif;
+    font-weight: 600;
+    color: #7f8c8d;
+  }
+  
+  .value {
+    font-family: 'Old Standard TT', serif;
+    color: #2c3e50;
+    font-weight: 600;
+  }
+  
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 1rem;
+  }
+  
+  .stat-card {
+    background: white;
+    border-radius: 16px;
+    padding: 1.5rem;
+    text-align: center;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+    transition: transform 0.3s ease;
+  }
+  
+  .stat-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  }
+  
+  .stat-card h3 {
+    font-family: 'Old Standard TT', serif;
+    color: #7f8c8d;
+    font-size: 1rem;
+    margin: 0 0 1rem 0;
+    font-weight: 600;
+  }
+  
+  .stat-number {
+    font-family: 'Bebas Neue', Arial, sans-serif;
+    font-size: 2.5rem;
+    color: #4e9af1;
+    font-weight: 400;
+    letter-spacing: 1px;
+  }
+  
+  .profile-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  
+  .play-button,
+  .scores-button {
+    padding: 1rem 2rem;
+    border: none;
+    border-radius: 12px;
+    font-family: 'Old Standard TT', serif;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: inline-block;
+  }
+  
+  .play-button {
+    background: #4e9af1;
+    color: white;
+  }
+  
+  .play-button:hover {
+    background: #3b82d9;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(78, 154, 241, 0.3);
+  }
+  
+  .scores-button {
+    background: white;
+    color: #4e9af1;
+    border: 2px solid #4e9af1;
+  }
+  
+  .scores-button:hover {
+    background: #4e9af1;
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(78, 154, 241, 0.3);
+  }
+  
+  .loading,
+  .error {
+    text-align: center;
+    padding: 3rem;
+    font-family: 'Old Standard TT', serif;
+    font-size: 1.2rem;
+    color: #7f8c8d;
+  }
+  
+  .retry-button {
+    background: #4e9af1;
+    color: white;
+    border: none;
+    padding: 1rem 2rem;
+    border-radius: 12px;
+    font-family: 'Old Standard TT', serif;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 1rem;
+  }
+  

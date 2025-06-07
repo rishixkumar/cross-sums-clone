@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import Board from './Board';
 import Header from './components/Header';
 import Profile from './pages/Profile';
 import Scores from './pages/Scores';
 import Login from './pages/Login';
+import PrivateRoute from './components/PrivateRoute';
 import './App.css';
 
 // Game component (your current game)
@@ -61,10 +62,26 @@ function App() {
     <>
       <Header />
       <Routes>
-        <Route path="/" element={<Game />} />
-        <Route path="/profile" element={<Profile />} />
-        <Route path="/scores" element={<Scores />} />
+        <Route path="/" element={<Navigate to="/login" replace />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/scores" element={<Scores />} />
+        <Route
+          path = "/game"
+          element = {
+            <PrivateRoute>
+              <Game />
+            </PrivateRoute>
+          }
+        />
+        
+        <Route
+          path="/profile"
+          element={
+            <PrivateRoute>
+              <Profile />
+            </PrivateRoute>
+          }
+        />
       </Routes>
     </>
   );

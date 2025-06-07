@@ -1,6 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
+import '@fontsource/bebas-neue';
+import '@fontsource/old-standard-tt';
 import App from './App';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));

@@ -3,6 +3,7 @@ from pydantic import BaseModel, EmailStr
 class UserCreate(BaseModel):
     email: EmailStr
     password: str
+#--------------------------------------------------------
 
 class UserRead(BaseModel):
     id: int
@@ -15,7 +16,15 @@ class UserRead(BaseModel):
 
     class Config:
         from_attributes = True  # Use this for Pydantic v2+
+#--------------------------------------------------------
 
 class UserLogin(BaseModel):
     email: EmailStr
     password: str
+#--------------------------------------------------------
+
+class PasswordReset(BaseModel):
+    email: EmailStr
+    reset_code: str
+    new_password: str
+#--------------------------------------------------------

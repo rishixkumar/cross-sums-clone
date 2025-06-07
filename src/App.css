@@ -1,3 +1,12 @@
+body {
+  font-family: 'Old Standard TT', serif;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Bebas Neue', Arial, sans-serif;
+  letter-spacing: 0.5px;
+}
+
 .App {
   min-height: 100vh;
   background: #d4e6f1;
