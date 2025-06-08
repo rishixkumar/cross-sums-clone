@@ -1,4 +1,5 @@
 import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Github } from 'lucide-react';
 import './Header.css';
 
 export default function Header() {
@@ -13,13 +14,30 @@ export default function Header() {
   return (
     <header className="app-header">
       <div className="header-container">
-        <div className="header-title">Cross Sums</div>
+        <div className="header-left">
+          <div className="header-title">Cross Sums</div>
+          <a
+            href="https://github.com/rishixkumar/cross-sums-clone"
+            className="github-header-link"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="View on GitHub"
+          >
+            <Github size={24} />
+          </a>
+        </div>
         <nav className="header-nav">
           <Link 
             to="/profile" 
             className={`nav-link ${location.pathname === '/profile' ? 'active' : ''}`}
           >
             Profile
+          </Link>
+          <Link 
+            to="/settings" 
+            className={`nav-link ${location.pathname === '/settings' ? 'active' : ''}`}
+          >
+            Settings
           </Link>
           <Link 
             to="/scores" 

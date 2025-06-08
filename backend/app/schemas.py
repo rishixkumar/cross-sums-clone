@@ -1,4 +1,9 @@
 from pydantic import BaseModel, EmailStr
+from typing import Optional
+#--------------------------------------------------------
+from typing import Dict, Any
+#--------------------------------------------------------
+
 
 class UserCreate(BaseModel):
     email: EmailStr
@@ -27,4 +32,22 @@ class PasswordReset(BaseModel):
     email: EmailStr
     reset_code: str
     new_password: str
+#--------------------------------------------------------
+
+class UserSettings(BaseModel):
+    name: Optional[str] = None
+    email: EmailStr
+    color_scheme: Optional[Dict[str, Any]] = None
+#--------------------------------------------------------
+
+class UserSettingsUpdate(BaseModel):
+    name: Optional[str] = None
+    email: Optional[EmailStr] = None
+    color_scheme: Optional[Dict[str, Any]] = None
+#--------------------------------------------------------
+
+class ChangePassword(BaseModel):
+    old_password: str
+    new_password: str
+    confirm_password: str
 #--------------------------------------------------------

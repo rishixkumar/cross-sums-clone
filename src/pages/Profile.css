@@ -1,12 +1,16 @@
 .profile-page {
     min-height: calc(100vh - 80px);
-    background: linear-gradient(135deg, #d4e6f1 0%, #e9f3fa 100%);
+    background: var(--bg) !important;
     padding: 2rem;
+    color: var(--text) !important;
+    transition: background 0.3s ease, color 0.3s ease;
   }
   
   .profile-container {
-    max-width: 800px;
+    max-width: 1000px;
     margin: 0 auto;
+    border-radius: 24px;
+    overflow: hidden;
   }
   
   .profile-header {
@@ -19,27 +23,11 @@
   .profile-header h1 {
     font-family: 'Bebas Neue', Arial, sans-serif;
     font-size: 2.5rem;
-    color: #2c3e50;
+    color: var(--text) !important;
     margin: 0;
     letter-spacing: 1px;
-  }
-  
-  .logout-button {
-    background: #ff6b6b;
-    color: white;
-    border: none;
-    padding: 0.75rem 1.5rem;
-    border-radius: 12px;
-    font-family: 'Old Standard TT', serif;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s ease;
-  }
-  
-  .logout-button:hover {
-    background: #ff5252;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(255, 107, 107, 0.3);
+    padding-left: 50px;
+    padding-top: 15px;
   }
   
   .profile-content {
@@ -49,16 +37,17 @@
   }
   
   .profile-card {
-    background: white;
+    background: var(--box) !important;
     border-radius: 20px;
     padding: 2rem;
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    color: var(--text) !important;
   }
   
   .profile-info h2 {
     font-family: 'Bebas Neue', Arial, sans-serif;
     font-size: 1.8rem;
-    color: #2c3e50;
+    color: var(--text) !important;
     margin-bottom: 1.5rem;
     letter-spacing: 0.5px;
   }
@@ -68,7 +57,7 @@
     justify-content: space-between;
     align-items: center;
     padding: 1rem 0;
-    border-bottom: 1px solid #ecf0f1;
+    border-bottom: 1px solid rgba(236, 240, 241, 0.3);
   }
   
   .info-row:last-child {
@@ -78,12 +67,12 @@
   .label {
     font-family: 'Old Standard TT', serif;
     font-weight: 600;
-    color: #7f8c8d;
+    color: var(--text) !important;
   }
   
   .value {
     font-family: 'Old Standard TT', serif;
-    color: #2c3e50;
+    color: var(--text) !important;
     font-weight: 600;
   }
   
@@ -94,12 +83,12 @@
   }
   
   .stat-card {
-    background: white;
+    background: var(--box) !important;
     border-radius: 16px;
     padding: 1.5rem;
     text-align: center;
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
-    transition: transform 0.3s ease;
+    transition: transform 0.3s ease, background 0.3s ease;
   }
   
   .stat-card:hover {
@@ -109,7 +98,7 @@
   
   .stat-card h3 {
     font-family: 'Old Standard TT', serif;
-    color: #7f8c8d;
+    color: var(--text) !important;
     font-size: 1rem;
     margin: 0 0 1rem 0;
     font-weight: 600;
@@ -118,7 +107,7 @@
   .stat-number {
     font-family: 'Bebas Neue', Arial, sans-serif;
     font-size: 2.5rem;
-    color: #4e9af1;
+    color: var(--text) !important;
     font-weight: 400;
     letter-spacing: 1px;
   }
@@ -128,6 +117,7 @@
     gap: 1rem;
     justify-content: center;
     flex-wrap: wrap;
+    padding-bottom: 15px;
   }
   
   .play-button,
@@ -145,25 +135,25 @@
   }
   
   .play-button {
-    background: #4e9af1;
-    color: white;
+    background: var(--text);
+    color: var(--box) !important;
   }
   
   .play-button:hover {
-    background: #3b82d9;
+    background: var(--text);
     transform: translateY(-2px);
     box-shadow: 0 4px 12px rgba(78, 154, 241, 0.3);
   }
   
   .scores-button {
-    background: white;
-    color: #4e9af1;
-    border: 2px solid #4e9af1;
+    background: var(--box) !important;
+    color: var(--text) !important;
+    border: 2px solid var(--text);
   }
   
   .scores-button:hover {
     background: #4e9af1;
-    color: white;
+    color: var(--text) !important;
     transform: translateY(-2px);
     box-shadow: 0 4px 12px rgba(78, 154, 241, 0.3);
   }
@@ -174,12 +164,12 @@
     padding: 3rem;
     font-family: 'Old Standard TT', serif;
     font-size: 1.2rem;
-    color: #7f8c8d;
+    color: var(--text) !important;
   }
   
   .retry-button {
     background: #4e9af1;
-    color: white;
+    color: var(--box) !important;
     border: none;
     padding: 1rem 2rem;
     border-radius: 12px;
@@ -187,5 +177,174 @@
     font-weight: 600;
     cursor: pointer;
     margin-top: 1rem;
+  }
+  
+  /* Account Information title and labels use text color */
+  .profile-info h2,
+  .label,
+  .value {
+    color: var(--text) !important;
+  }
+  
+  /* Game stat boxes titles and labels use text color */
+  .stat-card h3 {
+    color: var(--text) !important;
+  }
+  
+  /* Player Profile title uses text color */
+  .profile-header h1 {
+    color: var(--text) !important;
+  }
+  
+  /* Account Information box background and text color */
+  .profile-card {
+    background: var(--box) !important;
+    color: var(--text) !important;
+  }
+  
+  /* Game stat boxes background */
+  .stat-card {
+    background: var(--box) !important;
+  }
+  
+  /* Numbers in game stat boxes use text color */
+  .stat-number {
+    color: var(--text) !important;
+  }
+  
+  /* How To Play Section */
+  .how-to-play-container {
+    text-align: center;
+    margin: 3rem auto 2rem auto;
+    user-select: none;
+    max-width: 600px;
+  }
+  
+  .how-to-play-title {
+    font-family: 'Bebas Neue', Arial, sans-serif;
+    font-size: 2.5rem;
+    color: var(--text) !important;
+    cursor: pointer;
+    display: inline-block;
+    position: relative;
+    padding-bottom: 8px;
+    transition: color 0.3s ease;
+    letter-spacing: 2px;
+    margin: 0;
+    user-select: none;              /* Prevent text selection */
+    -webkit-user-select: none;      /* Safari support */
+    -ms-user-select: none;          /* IE/Edge support */
+    outline: none;                  /* Remove focus outline */
+    box-shadow: none;               /* Remove any box shadow on focus */
+  }
+  
+  /* Animated underline effect */
+  .how-to-play-title::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 3px;
+    bottom: 0;
+    left: 0;
+    background-color: var(--text);
+    transform: scaleX(0);
+    transform-origin: bottom right;
+    transition: transform 0.3s ease-out;
+  }
+  
+  .how-to-play-title:hover::after,
+  .how-to-play-title.expanded::after {
+    transform: scaleX(1);
+    transform-origin: bottom left;
+  }
+  
+  .how-to-play-title:focus {
+    outline: 2px dashed var(--text);
+    outline-offset: 4px;
+    box-shadow: none;
+  }
+  
+  /* Rules container with smooth expand/collapse */
+  .rules-container {
+    overflow: hidden;
+    max-height: 0;
+    transition: max-height 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    margin-top: 1.5rem;
+    opacity: 0;
+    transition: max-height 0.6s cubic-bezier(0.4, 0, 0.2, 1), 
+                opacity 0.3s ease-in-out;
+  }
+  
+  .rules-container.show {
+    max-height: 400px; /* Enough to show all lines */
+    opacity: 1;
+  }
+  
+  .rules-container.hide {
+    max-height: 0;
+    opacity: 0;
+  }
+  
+  /* Individual rule lines with waterfall animation */
+  .rule-line {
+    font-family: 'Old Standard TT', serif;
+    color: var(--text) !important;
+    font-size: 1.1rem;
+    line-height: 1.6;
+    margin: 0.75rem 0;
+    opacity: 0;
+    transform: translateY(20px);
+    animation-fill-mode: forwards;
+    animation-duration: 0.4s;
+    animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  /* Show animation */
+  .rules-container.show .rule-line {
+    animation-name: fadeInUp;
+    animation-play-state: running;
+  }
+  
+  /* Hide animation */
+  .rules-container.hide .rule-line {
+    animation-name: fadeOutDown;
+    animation-duration: 0.3s;
+    animation-direction: normal;
+  }
+  
+  /* Keyframe animations */
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  @keyframes fadeOutDown {
+    from {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    to {
+      opacity: 0;
+      transform: translateY(-15px);
+    }
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .how-to-play-title {
+      font-size: 2rem;
+      letter-spacing: 1px;
+    }
+    
+    .rule-line {
+      font-size: 1rem;
+      margin: 0.5rem 0;
+    }
   }
   

@@ -24,14 +24,14 @@
   .login-header h1 {
     font-family: 'Bebas Neue', Arial, sans-serif;
     font-size: 2.5rem;
-    color: #2c3e50;
+    color: var(--text) !important;
     margin-bottom: 0.5rem;
     letter-spacing: 1px;
   }
   
   .login-header p {
     font-family: 'Old Standard TT', serif;
-    color: #7f8c8d;
+    color: var(--text) !important;
     font-size: 1rem;
     margin: 0;
   }
@@ -51,7 +51,7 @@
   .form-group label {
     font-family: 'Old Standard TT', serif;
     font-weight: 600;
-    color: #2c3e50;
+    color: var(--text) !important;
     font-size: 1rem;
   }
   
@@ -89,7 +89,7 @@
     font-family: 'Old Standard TT', serif;
     margin-top: 0.25rem;
     margin-bottom: -0.5rem;
-    background: rgba(233,243,250,0.5);
+    background: var(--box);
     border-radius: 6px;
     padding: 0.2rem 0.7rem;
     transition: background 0.2s;

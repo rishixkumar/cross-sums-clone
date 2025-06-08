@@ -2,11 +2,16 @@ import React, { useState } from 'react';
 import './Board.css';
 
 const Board = ({ size = 5, rowLabels = [], colLabels = [], grid = [] }) => {
+  const [infoExpanded, setInfoExpanded] = useState(false);
   const initialGrid = grid.length > 0
     ? grid.map(row => row.map(cell => cell.toString()))
     : Array.from({ length: size }, () => Array(size).fill(''));
 
   const [cells, setCells] = useState(initialGrid);
+
+  const toggleInfo = () => {
+    setInfoExpanded(prev => !prev);
+  };
 
   const displayRowLabels = rowLabels.length > 0 ? rowLabels : Array(size).fill('');
   const displayColLabels = colLabels.length > 0 ? colLabels : Array(size).fill('');
@@ -31,6 +36,21 @@ const Board = ({ size = 5, rowLabels = [], colLabels = [], grid = [] }) => {
 
   return (
     <div className="board-container">
+      <div className="info-widget">
+        <div
+          className={`exclamation-mark ${infoExpanded ? 'rotated' : ''}`}
+          onClick={toggleInfo}
+          role="button"
+          tabIndex={0}
+          onKeyDown={e => { if (e.key === 'Enter' || e.key === ' ') toggleInfo(); }}
+        >
+          !
+        </div>
+        <div className={`info-message ${infoExpanded ? 'show' : 'hide'}`}>
+          Go to the profile page to see your stats and how to play
+        </div>
+      </div>
+
       <div className="board-labels board-labels-top">
         <div className="board-label-empty"></div>
         {displayColLabels.map((label, idx) => (

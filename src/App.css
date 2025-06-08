@@ -1,3 +1,56 @@
+:root {
+  --bg: #e9f3fa;
+  --box: #ffffff;
+  --text: #2c3e50;
+}
+
+/* Apply to body and html */
+html, body {
+  background: var(--bg) !important;
+  color: var(--text) !important;
+  transition: background 0.3s, color 0.3s;
+  margin: 0;
+  padding: 0;
+}
+
+/* Apply to all page containers */
+.settings-page,
+.login-page,
+.profile-page,
+.scores-page {
+  background: var(--bg) !important;
+  color: var(--text) !important;
+  transition: background 0.3s, color 0.3s;
+}
+
+/* Apply to all content boxes */
+.settings-content,
+.settings-container,
+.profile-container,
+.scores-container,
+.login-container,
+.modal-glass {
+  background: var(--box) !important;
+  color: var(--text) !important;
+  transition: background 0.3s, color 0.3s;
+}
+
+/* Header */
+.app-header {
+  background: var(--box) !important;
+  color: var(--text) !important;
+}
+
+/* Navigation links */
+.nav-link {
+  color: var(--text) !important;
+}
+
+.nav-link.active {
+  background: var(--bg) !important;
+  color: var(--text) !important;
+}
+
 body {
   font-family: 'Old Standard TT', serif;
 }
@@ -9,7 +62,6 @@ h1, h2, h3, h4, h5, h6 {
 
 .App {
   min-height: 100vh;
-  background: #d4e6f1;
   display: flex;
   align-items: center;
   justify-content: center;

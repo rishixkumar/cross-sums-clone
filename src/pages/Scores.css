@@ -1,60 +1,72 @@
 .scores-page {
     min-height: calc(100vh - 80px);
-    background: linear-gradient(135deg, #d4e6f1 0%, #e9f3fa 100%);
+    background: var(--bg) !important;
     padding: 2rem;
-  }
-  
-  .scores-container {
+    transition: background 0.3s ease;
+}
+
+.scores-container {
     max-width: 700px;
     margin: 0 auto;
-    background: white;
+    background: var(--box) !important;
     border-radius: 20px;
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
     padding: 2.5rem;
-  }
-  
-  .scores-container h1 {
+    transition: background 0.3s ease;
+}
+
+.scores-container h1 {
     font-family: 'Bebas Neue', Arial, sans-serif;
     font-size: 2.3rem;
-    color: #2c3e50;
+    color: var(--text) !important;
     margin-bottom: 2rem;
     letter-spacing: 1px;
     text-align: center;
-  }
-  
-  .scores-grid {
+}
+
+.scores-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
     gap: 2rem;
-  }
-  
-  .score-card {
-    background: #e9f3fa;
+}
+
+.score-card {
+    /* Use the dynamically calculated contrast color */
+    background: var(--box) !important;
     border-radius: 16px;
     padding: 2rem 1rem;
     text-align: center;
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
-    transition: transform 0.3s ease;
-  }
-  
-  .score-card:hover {
+    transition: transform 0.3s ease, background 0.3s ease;
+}
+
+/* Fallback for browsers that don't support color-mix */
+@supports not (background: color-mix(in srgb, var(--box) 50%, black)) {
+    .score-card {
+        background: var(--box) !important;
+        filter: var(--score-card-filter, brightness(0.7)) !important;
+        transition: transform 0.3s ease, background 0.3s ease, filter 0.3s ease;
+    }
+}
+
+.score-card:hover {
     transform: translateY(-4px);
     box-shadow: 0 8px 24px rgba(78, 154, 241, 0.12);
-  }
-  
-  .score-label {
+}
+
+.score-label {
     font-family: 'Old Standard TT', serif;
-    color: #7f8c8d;
+    color: var(--text) !important;
     font-size: 1.1rem;
     margin-bottom: 1rem;
     font-weight: 600;
-  }
-  
-  .score-value {
+}
+
+.score-value {
     font-family: 'Bebas Neue', Arial, sans-serif;
     font-size: 2.5rem;
-    color: #4e9af1;
+    color: var(--text) !important;
     font-weight: 400;
     letter-spacing: 1px;
-  }
+}
   

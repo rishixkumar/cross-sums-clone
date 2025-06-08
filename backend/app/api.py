@@ -12,7 +12,10 @@ from datetime import timedelta, datetime
 from fastapi.security import OAuth2PasswordRequestForm
 #--------------------------------------------------------
 import random
+import json
 from app.email_utils import send_reset_email
+#--------------------------------------------------------
+from app.schemas import UserSettings, UserSettingsUpdate, ChangePassword
 #--------------------------------------------------------
 
 
@@ -101,7 +104,6 @@ def forgot_password(email: str, session: Session = Depends(get_session)):
 
 @router.post("/reset-password")
 def reset_password(reset_data: PasswordReset, session: Session = Depends(get_session)):
-    # Find valid, unused, non-expired token
     reset_token = session.exec(
         select(PasswordResetToken).where(
             PasswordResetToken.email == reset_data.email,
@@ -114,22 +116,18 @@ def reset_password(reset_data: PasswordReset, session: Session = Depends(get_ses
     if not reset_token:
         raise HTTPException(status_code=400, detail="Invalid or expired reset code")
     
-    # Find user
     user = session.exec(select(User).where(User.email == reset_data.email)).first()
     if not user:
         raise HTTPException(status_code=404, detail="User not found")
     
-    # Update password
     user.hashed_password = hash_password(reset_data.new_password)
     
-    # Mark token as used
     reset_token.used = True
     
     session.commit()
     return {"msg": "Password updated successfully"}
 #--------------------------------------------------------
 
-# Cleanup endpoint (optional - for maintenance)
 @router.delete("/cleanup-expired-tokens")
 def cleanup_expired_tokens(session: Session = Depends(get_session)):
     """Remove expired reset tokens (maintenance endpoint)"""
@@ -146,7 +144,85 @@ def cleanup_expired_tokens(session: Session = Depends(get_session)):
     return {"msg": f"Cleaned up {len(expired_tokens)} expired tokens"}
 #--------------------------------------------------------
 
-@router.get("/debug-users")  # TEMPORARY - Remove in production
+@router.get("/debug-users")
 def debug_users(session: Session = Depends(get_session)):
     users = session.exec(select(User)).all()
     return {"users": [{"id": u.id, "email": u.email} for u in users]}
+#--------------------------------------------------------
+
+@router.get("/settings", response_model=UserSettings)
+def get_settings(current_user: User = Depends(get_current_user)):
+    """Get user settings and preferences"""
+    color_scheme = current_user.color_scheme
+    if color_scheme and isinstance(color_scheme, str):
+        try:
+            color_scheme = json.loads(color_scheme)
+        except Exception:
+            color_scheme = {"background": "#e9f3fa", "box": "#ffffff", "text": "#2c3e50"}
+    return UserSettings(
+        name=current_user.name,
+        email=current_user.email,
+        color_scheme=color_scheme
+    )
+#--------------------------------------------------------
+
+@router.put("/settings", response_model=UserSettings)
+def update_settings(
+    settings_update: UserSettingsUpdate, 
+    current_user: User = Depends(get_current_user),
+    session: Session = Depends(get_session)
+):
+    """Update user settings and preferences"""
+    if settings_update.email and settings_update.email != current_user.email:
+        existing_user = session.exec(
+            select(User).where(User.email == settings_update.email)
+        ).first()
+        if existing_user:
+            raise HTTPException(status_code=400, detail="Email already registered")
+    
+    update_data = settings_update.model_dump(exclude_unset=True)
+    if 'color_scheme' in update_data and isinstance(update_data['color_scheme'], dict):
+        update_data['color_scheme'] = json.dumps(update_data['color_scheme'])
+    
+    for field, value in update_data.items():
+        setattr(current_user, field, value)
+    
+    session.commit()
+    session.refresh(current_user)
+    
+    # Parse color_scheme for response
+    color_scheme = current_user.color_scheme
+    if color_scheme and isinstance(color_scheme, str):
+        try:
+            color_scheme = json.loads(color_scheme)
+        except Exception:
+            color_scheme = {"background": "#e9f3fa", "box": "#ffffff", "text": "#2c3e50"}
+    
+    return UserSettings(
+        name=current_user.name,
+        email=current_user.email,
+        color_scheme=color_scheme
+    )
+#--------------------------------------------------------
+
+@router.post("/change-password")
+def change_password(
+    password_data: ChangePassword,
+    current_user: User = Depends(get_current_user),
+    session: Session = Depends(get_session)
+):
+    """Change user password with old password verification"""
+    if not verify_password(password_data.old_password, current_user.hashed_password):
+        raise HTTPException(status_code=400, detail="Incorrect current password")
+    
+    if len(password_data.new_password) < 6:
+        raise HTTPException(status_code=400, detail="New password must be at least 6 characters")
+    
+    if password_data.new_password != password_data.confirm_password:
+        raise HTTPException(status_code=400, detail="New passwords do not match")
+    
+    current_user.hashed_password = hash_password(password_data.new_password)
+    session.commit()
+    
+    return {"msg": "Password updated successfully"}
+#--------------------------------------------------------

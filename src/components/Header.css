@@ -1,5 +1,5 @@
 .app-header {
-    background: linear-gradient(135deg, #e9f3fa 0%, #d4e6f1 100%);
+    background: var(--bg) !important;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
     border-bottom: 1px solid rgba(116, 185, 255, 0.2);
   }
@@ -13,12 +13,31 @@
     padding: 1rem 2rem;
   }
   
+  .header-left {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  
   .header-title {
     font-size: 2.2rem;
     font-weight: 400;
-    color: #2c3e50;
-    font-family: 'Bebas Neue', Arial, sans-serif; /* Changed to Bebas Neue */
+    color: var(--text) !important; /* Changed to use CSS variable */
+    font-family: 'Bebas Neue', Arial, sans-serif;
     letter-spacing: 1px;
+  }
+  
+  .github-header-link {
+    color: var(--text) !important;
+    transition: color 0.2s ease, transform 0.2s ease;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+  }
+  
+  .github-header-link:hover {
+    color: var(--text) !important;
+    transform: scale(1.2);
   }
   
   .header-nav {
@@ -29,7 +48,7 @@
   
   .nav-link {
     text-decoration: none;
-    color: #2c3e50;
+    color: var(--text) !important;
     font-weight: 400;
     padding: 0.75rem 1.5rem;
     border-radius: 50px;
@@ -42,21 +61,22 @@
     background: rgba(255, 255, 255, 0.7);
     transform: translateY(-2px);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    color: var(--text) !important;
   }
   
   .nav-link.active {
-    background: #fff;
-    color: #4e9af1;
+    background: var(--box) !important;
+    color: var(--text) !important;
     box-shadow: 0 2px 8px rgba(78, 154, 241, 0.2);
   }
   
   .nav-link.logout {
-    background: #ff6b6b;
+    background: var(--box);
     color: white;
   }
   
   .nav-link.logout:hover {
-    background: #ff5252;
+    background: var(--box);
     transform: translateY(-2px);
   }
   

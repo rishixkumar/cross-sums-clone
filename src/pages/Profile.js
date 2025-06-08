@@ -6,7 +6,20 @@ export default function Profile() {
   const [userData, setUserData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [rulesExpanded, setRulesExpanded] = useState(false);
   const navigate = useNavigate();
+
+  const toggleRules = () => {
+    setRulesExpanded(prev => !prev);
+  };
+
+  const rules = [
+    'Mark the numbers in the grid so that the sum of each row and each column matches the numbers shown at the ends of the rows and columns.',
+    'Remove (erase) any numbers that would cause a row or column to exceed its target sum.', 
+    'Use the pen tool to mark numbers you are sure about, and the eraser to remove numbers you think don\'t belong.',
+    'Each puzzle has only one unique solution—think carefully and use logic to deduce which numbers to keep.',
+    'Adjust the difficulty and level as you improve, and try to solve with as few mistakes as possible!'
+  ];
 
   useEffect(() => {
     const fetchUserProfile = async () => {
@@ -104,6 +117,30 @@ export default function Profile() {
             <div className="stat-card">
               <h3>Total Score</h3>
               <div className="stat-number">{userData?.games_score || 0}</div>
+            </div>
+          </div>
+
+          <div className="how-to-play-container">
+            <h2
+              className={`how-to-play-title ${rulesExpanded ? 'expanded' : ''}`}
+              onClick={toggleRules}
+              onKeyDown={e => { if (e.key === 'Enter' || e.key === ' ') toggleRules(); }}
+              role="button"
+              aria-expanded={rulesExpanded}
+              tabIndex={0}
+            >
+              H o w &nbsp; T o &nbsp; P l a y
+            </h2>
+            <div className={`rules-container ${rulesExpanded ? 'show' : 'hide'}`}>
+              {rules.map((rule, index) => (
+                <p
+                  key={index}
+                  className="rule-line"
+                  style={{ animationDelay: `${index * 0.15}s` }}
+                >
+                  {rule}
+                </p>
+              ))}
             </div>
           </div>
 
