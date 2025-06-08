@@ -1,9 +1,28 @@
+/**
+ * @fileoverview Settings component for the Cross Sums application. Handles user account settings,
+ * password management, and theme customization. Includes color pickers and preset themes.
+ * 
+ * @requires React
+ * @requires useState
+ * @requires useEffect
+ * @requires lucide-react
+ * @requires react-colorful
+ */
+
 import React, { useState, useEffect } from 'react';
 import { User, Lock, Palette } from 'lucide-react';
 import { HexColorPicker } from "react-colorful";
 import './Settings.css';
 //--------------------------------------------------------
 
+/**
+ * Predefined color theme presets
+ * @type {Array<Object>}
+ * @property {string} name - Theme name
+ * @property {string} background - Background color in hex
+ * @property {string} box - Box/container color in hex
+ * @property {string} text - Text color in hex
+ */
 const PRESETS = [
     {
         name: "Modern Blue",
@@ -32,7 +51,13 @@ const PRESETS = [
 ];
 //--------------------------------------------------------
 
-// Function to determine if a color is light or dark
+/**
+ * Determines if a color is light or dark based on its luminance
+ * 
+ * @function
+ * @param {string} hex - Hex color code to analyze
+ * @returns {boolean} True if the color is light, false if dark
+ */
 const isLightColor = (hex) => {
   // Add validation to prevent undefined errors
   if (!hex || typeof hex !== 'string' || hex.length < 7) {
@@ -51,32 +76,71 @@ const isLightColor = (hex) => {
   return luminance > 0.5;
 };
 
+/**
+ * Settings component for managing user preferences and account settings
+ * 
+ * @component
+ * @returns {JSX.Element} Rendered settings page with account, password, and theme sections
+ * 
+ * @example
+ * <Settings />
+ */
 export default function Settings() {
+  /** @type {[string, function]} State for active tab */
   const [activeTab, setActiveTab] = useState('account');
+  
+  /** @type {[boolean, function]} State for loading status */
   const [loading, setLoading] = useState(true);
+  
+  /** @type {[Object, function]} State for user settings */
   const [settings, setSettings] = useState({ name: '', email: '', color_scheme: 'default' });
+  
+  /** @type {[Object, function]} State for edit form */
   const [editForm, setEditForm] = useState({ name: '', email: '' });
+  
+  /** @type {[string, function]} State for edit success message */
   const [editMsg, setEditMsg] = useState('');
+  
+  /** @type {[string, function]} State for edit error message */
   const [editError, setEditError] = useState('');
+  
+  /** @type {[Object, function]} State for password form */
   const [pwForm, setPwForm] = useState({ old: '', new: '', confirm: '' });
+  
+  /** @type {[string, function]} State for password success message */
   const [pwMsg, setPwMsg] = useState('');
+  
+  /** @type {[string, function]} State for password error message */
   const [pwError, setPwError] = useState('');
+  
+  /** @type {[boolean, function]} State for password update loading */
   const [pwLoading, setPwLoading] = useState(false);
+  
+  /** @type {[boolean, function]} State for password visibility */
   const [showPw, setShowPw] = useState(false);
   const [showPwNew, setShowPwNew] = useState(false);
   const [showPwConfirm, setShowPwConfirm] = useState(false);
   
-  // Theme picker state
+  /** @type {[Object, function]} State for theme colors */
   const [theme, setTheme] = useState({
     background: settings.color_scheme?.background || "#e9f3fa",
     box: settings.color_scheme?.box || "#fff",
     text: settings.color_scheme?.text || "#2c3e50"
   });
+  
+  /** @type {[string, function]} State for theme success message */
   const [themeMsg, setThemeMsg] = useState('');
+  
+  /** @type {[string, function]} State for theme error message */
   const [themeError, setThemeError] = useState('');
+  
+  /** @type {[boolean, function]} State for theme save loading */
   const [themeLoading, setThemeLoading] = useState(false);
 
-  // Update theme picker when settings change
+  /**
+   * Effect to update theme when settings change
+   * @function
+   */
   useEffect(() => {
     if (settings.color_scheme) {
       setTheme({
@@ -89,7 +153,12 @@ export default function Settings() {
     }
   }, [settings.color_scheme]);
 
-  // Apply theme to CSS variables
+  /**
+   * Applies theme colors to CSS variables and calculates contrast
+   * 
+   * @function
+   * @param {Object} scheme - Color scheme object
+   */
   const applyTheme = (scheme) => {
     if (!scheme) return;
     
@@ -131,12 +200,18 @@ export default function Settings() {
     document.body.style.color = text;
   };
 
-  // Live preview as user picks colors
+  /**
+   * Effect to preview theme changes in real-time
+   * @function
+   */
   useEffect(() => {
     applyTheme(theme);
   }, [theme]);
 
-  // Save theme to backend
+  /**
+   * Saves theme settings to the backend
+   * @function
+   */
   const handleThemeSave = async () => {
     setThemeMsg('');
     setThemeError('');
@@ -164,6 +239,10 @@ export default function Settings() {
     setThemeLoading(false);
   };
 
+  /**
+   * Effect to fetch user settings on component mount
+   * @function
+   */
   useEffect(() => {
     const fetchSettings = async () => {
       setLoading(true);
@@ -188,6 +267,11 @@ export default function Settings() {
   }, []);
 
   //--------------------------------------------------------
+  /**
+   * Handles account information updates
+   * @function
+   * @param {Event} e - Form submit event
+   */
   const handleAccountSubmit = async (e) => {
     e.preventDefault();
     setEditMsg('');
@@ -215,6 +299,11 @@ export default function Settings() {
   };
 
   //--------------------------------------------------------
+  /**
+   * Handles password updates
+   * @function
+   * @param {Event} e - Form submit event
+   */
   const handlePwSubmit = async (e) => {
     e.preventDefault();
     setPwMsg('');
@@ -258,6 +347,10 @@ export default function Settings() {
   };
 
   //--------------------------------------------------------
+  /**
+   * Navigation tabs configuration
+   * @type {Array<Object>}
+   */
   const tabs = [
     { id: 'account', label: 'Account', icon: <User size={20} /> },
     { id: 'password', label: 'Password', icon: <Lock size={20} /> },
@@ -273,68 +366,87 @@ export default function Settings() {
           <p>Manage your account preferences and personalization</p>
         </div>
 
-        <div className="settings-tabs">
+        {/* Navigation Tabs */}
+        <div className="settings-tabs" role="tablist">
           {tabs.map(tab => (
             <button
               key={tab.id}
               className={`tab-button ${activeTab === tab.id ? 'active' : ''}`}
               onClick={() => setActiveTab(tab.id)}
+              role="tab"
+              aria-selected={activeTab === tab.id}
+              aria-controls={`${tab.id}-panel`}
             >
-              <span className="tab-icon">{tab.icon}</span>
+              <span className="tab-icon" aria-hidden="true">{tab.icon}</span>
               <span className="tab-label">{tab.label}</span>
             </button>
           ))}
         </div>
 
+        {/* Tab Content */}
         <div className="settings-content">
+          {/* Account Tab */}
           {activeTab === 'account' && (
-            <div className="settings-section">
+            <div className="settings-section" role="tabpanel" id="account-panel">
               <h2>Account Information</h2>
               <p className="section-description">Update your personal information</p>
               {loading ? (
-                <div className="placeholder-card">Loading...</div>
+                <div className="placeholder-card" role="status">Loading...</div>
               ) : (
                 <form className="settings-form" onSubmit={handleAccountSubmit}>
                   <div className="form-group">
-                    <label>Name</label>
+                    <label htmlFor="name">Name</label>
                     <input
+                      id="name"
                       type="text"
                       value={editForm.name}
                       onChange={e => setEditForm(f => ({ ...f, name: e.target.value }))}
                       maxLength={32}
                       placeholder="Your name"
+                      aria-label="Your name"
                     />
                   </div>
                   <div className="form-group">
-                    <label>Email</label>
+                    <label htmlFor="email">Email</label>
                     <input
+                      id="email"
                       type="email"
                       value={editForm.email}
                       onChange={e => setEditForm(f => ({ ...f, email: e.target.value }))}
                       required
                       placeholder="your@email.com"
+                      aria-label="Your email address"
                     />
                   </div>
-                  <button type="submit" className="submit-button">Save Changes</button>
-                  {editMsg && <div className="modal-msg" style={{marginTop: 8}}>{editMsg}</div>}
-                  {editError && <div className="modal-error" style={{marginTop: 8}}>{editError}</div>}
+                  <button 
+                    type="submit" 
+                    className="submit-button"
+                    aria-label="Save account changes"
+                  >
+                    Save Changes
+                  </button>
+                  {editMsg && <div className="modal-msg" role="status" style={{marginTop: 8}}>{editMsg}</div>}
+                  {editError && <div className="modal-error" role="alert" style={{marginTop: 8}}>{editError}</div>}
                 </form>
               )}
             </div>
           )}
 
+          {/* Password Tab */}
           {activeTab === 'password' && (
-            <div className="settings-section">
+            <div className="settings-section" role="tabpanel" id="password-panel">
               <h2>Change Password</h2>
               <p className="section-description">Update your password for security</p>
               <form className="settings-form" onSubmit={handlePwSubmit}>
                 <div className="form-group">
-                  <label>Current Password</label>
+                  <label htmlFor="current-password">Current Password</label>
                   <input
+                    id="current-password"
                     type={showPw ? "text" : "password"}
                     value={pwForm.old}
                     onChange={e => setPwForm(f => ({ ...f, old: e.target.value }))}
                     required
+                    aria-label="Current password"
                   />
                   <div className="see-password-row">
                     <input
@@ -343,6 +455,7 @@ export default function Settings() {
                       checked={showPw}
                       onChange={() => setShowPw(v => !v)}
                       className="see-password-checkbox"
+                      aria-label="Show current password"
                     />
                     <label htmlFor="seePw" className="see-password-label">
                       Show password
@@ -350,12 +463,14 @@ export default function Settings() {
                   </div>
                 </div>
                 <div className="form-group">
-                  <label>New Password</label>
+                  <label htmlFor="new-password">New Password</label>
                   <input
+                    id="new-password"
                     type={showPwNew ? "text" : "password"}
                     value={pwForm.new}
                     onChange={e => setPwForm(f => ({ ...f, new: e.target.value }))}
                     required
+                    aria-label="New password"
                   />
                   <div className="password-hint">
                     Password must be at least 6 characters.
@@ -367,6 +482,7 @@ export default function Settings() {
                       checked={showPwNew}
                       onChange={() => setShowPwNew(v => !v)}
                       className="see-password-checkbox"
+                      aria-label="Show new password"
                     />
                     <label htmlFor="seePwNew" className="see-password-label">
                       Show password
@@ -374,12 +490,14 @@ export default function Settings() {
                   </div>
                 </div>
                 <div className="form-group confirm-new-password">
-                  <label>Confirm New Password</label>
+                  <label htmlFor="confirm-password">Confirm New Password</label>
                   <input
+                    id="confirm-password"
                     type={showPwConfirm ? "text" : "password"}
                     value={pwForm.confirm}
                     onChange={e => setPwForm(f => ({ ...f, confirm: e.target.value }))}
                     required
+                    aria-label="Confirm new password"
                   />
                   <div className="see-password-row">
                     <input
@@ -388,69 +506,85 @@ export default function Settings() {
                       checked={showPwConfirm}
                       onChange={() => setShowPwConfirm(v => !v)}
                       className="see-password-checkbox"
+                      aria-label="Show confirm password"
                     />
                     <label htmlFor="seePwConfirm" className="see-password-label">
                       Show password
                     </label>
                   </div>
                 </div>
-                <button type="submit" className="submit-button" disabled={pwLoading}>
+                <button 
+                  type="submit" 
+                  className="submit-button" 
+                  disabled={pwLoading}
+                  aria-label={pwLoading ? "Updating password..." : "Change password"}
+                >
                   {pwLoading ? "Updating..." : "Change Password"}
                 </button>
-                {pwMsg && <div className="modal-msg" style={{marginTop: 8}}>{pwMsg}</div>}
-                {pwError && <div className="modal-error" style={{marginTop: 8}}>{pwError}</div>}
+                {pwMsg && <div className="modal-msg" role="status" style={{marginTop: 8}}>{pwMsg}</div>}
+                {pwError && <div className="modal-error" role="alert" style={{marginTop: 8}}>{pwError}</div>}
               </form>
             </div>
           )}
 
+          {/* Theme Tab */}
           {activeTab === 'theme' && (
-            <div className="settings-section">
+            <div className="settings-section" role="tabpanel" id="theme-panel">
               <h2>Color Theme</h2>
               <p className="section-description">
                 Customize your experience. Choose colors or pick a preset.
               </p>
               <div className="theme-pickers-row">
                 <div className="theme-picker">
-                  <label>Background</label>
+                  <label htmlFor="background-picker">Background</label>
                   <HexColorPicker
+                    id="background-picker"
                     color={theme.background}
                     onChange={color => setTheme(t => ({ ...t, background: color }))}
+                    aria-label="Background color picker"
                   />
                   <input
                     type="text"
                     value={theme.background}
                     onChange={e => setTheme(t => ({ ...t, background: e.target.value }))}
                     className="theme-color-input"
+                    aria-label="Background color hex value"
                   />
                 </div>
                 <div className="theme-picker">
-                  <label>Box</label>
+                  <label htmlFor="box-picker">Box</label>
                   <HexColorPicker
+                    id="box-picker"
                     color={theme.box}
                     onChange={color => setTheme(t => ({ ...t, box: color }))}
+                    aria-label="Box color picker"
                   />
                   <input
                     type="text"
                     value={theme.box}
                     onChange={e => setTheme(t => ({ ...t, box: e.target.value }))}
                     className="theme-color-input"
+                    aria-label="Box color hex value"
                   />
                 </div>
                 <div className="theme-picker">
-                  <label>Text</label>
+                  <label htmlFor="text-picker">Text</label>
                   <HexColorPicker
+                    id="text-picker"
                     color={theme.text}
                     onChange={color => setTheme(t => ({ ...t, text: color }))}
+                    aria-label="Text color picker"
                   />
                   <input
                     type="text"
                     value={theme.text}
                     onChange={e => setTheme(t => ({ ...t, text: e.target.value }))}
                     className="theme-color-input"
+                    aria-label="Text color hex value"
                   />
                 </div>
               </div>
-              <div className="theme-presets-row">
+              <div className="theme-presets-row" role="group" aria-label="Theme presets">
                 {PRESETS.map(preset => (
                   <button
                     key={preset.name}
@@ -467,17 +601,23 @@ export default function Settings() {
                       text: preset.text
                     })}
                     type="button"
+                    aria-label={`Apply ${preset.name} theme`}
                   >
                     {preset.name}
                   </button>
                 ))}
               </div>
-              <div className="theme-preview-box" style={{
-                background: theme.box,
-                color: theme.text,
-                border: `2px solid ${theme.background}`,
-                marginTop: 24
-              }}>
+              <div 
+                className="theme-preview-box" 
+                style={{
+                  background: theme.box,
+                  color: theme.text,
+                  border: `2px solid ${theme.background}`,
+                  marginTop: 24
+                }}
+                role="region"
+                aria-label="Theme preview"
+              >
                 <div style={{ fontFamily: 'Bebas Neue', fontSize: 24 }}>Preview</div>
                 <div style={{ fontFamily: 'Old Standard TT', fontSize: 16 }}>
                   This is how your theme will look!
@@ -488,11 +628,12 @@ export default function Settings() {
                 style={{ marginTop: 24 }}
                 onClick={handleThemeSave}
                 disabled={themeLoading}
+                aria-label={themeLoading ? "Saving theme..." : "Save theme"}
               >
                 {themeLoading ? "Saving..." : "Save Theme"}
               </button>
-              {themeMsg && <div className="modal-msg" style={{marginTop: 8}}>{themeMsg}</div>}
-              {themeError && <div className="modal-error" style={{marginTop: 8}}>{themeError}</div>}
+              {themeMsg && <div className="modal-msg" role="status" style={{marginTop: 8}}>{themeMsg}</div>}
+              {themeError && <div className="modal-error" role="alert" style={{marginTop: 8}}>{themeError}</div>}
             </div>
           )}
         </div>

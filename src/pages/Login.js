@@ -1,21 +1,57 @@
+/**
+ * @fileoverview Login component for the Cross Sums application. Handles user authentication,
+ * account creation, and password reset functionality. Includes form validation and error handling.
+ * 
+ * @requires React
+ * @requires react-router-dom
+ * @requires useState
+ */
+
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import ForgotPasswordModal from '../components/ForgotPasswordModal';
 import './Login.css';
 
+/**
+ * Login component that handles user authentication and account creation
+ * 
+ * @component
+ * @returns {JSX.Element} Rendered login page with authentication forms
+ * 
+ * @example
+ * <Login />
+ */
 export default function Login() {
+  /** @type {[boolean, function]} State to toggle between login and signup */
   const [isSignup, setIsSignup] = useState(false);
+  
+  /** @type {[boolean, function]} State to control forgot password modal */
   const [showForgot, setShowForgot] = useState(false);
+  
+  /** @type {[boolean, function]} State to toggle password visibility */
   const [showPassword, setShowPassword] = useState(false);
+  
+  /** @type {[Object, function]} State for form input values */
   const [formData, setFormData] = useState({
     email: '',
     password: '',
     confirmPassword: ''
   });
+  
+  /** @type {[Object, function]} State for form validation errors */
   const [errors, setErrors] = useState({});
+  
+  /** @type {[boolean, function]} State for loading status */
   const [loading, setLoading] = useState(false);
+  
+  /** @type {function} Navigation function from react-router */
   const navigate = useNavigate();
 
+  /**
+   * Handles input field changes and clears associated errors
+   * @function
+   * @param {Event} e - Input change event
+   */
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData(prev => ({
@@ -31,6 +67,11 @@ export default function Login() {
     }
   };
 
+  /**
+   * Validates form inputs and sets error messages
+   * @function
+   * @returns {boolean} True if form is valid, false otherwise
+   */
   const validateForm = () => {
     const newErrors = {};
     
@@ -54,6 +95,11 @@ export default function Login() {
     return Object.keys(newErrors).length === 0;
   };
 
+  /**
+   * Handles form submission for both login and signup
+   * @function
+   * @param {Event} e - Form submit event
+   */
   const handleSubmit = async (e) => {
     e.preventDefault();
     
@@ -124,7 +170,7 @@ export default function Login() {
         </div>
         
         <form onSubmit={handleSubmit} className="login-form">
-          {errors.general && <div className="error-message">{errors.general}</div>}
+          {errors.general && <div className="error-message" role="alert">{errors.general}</div>}
           
           <div className="form-group">
             <label htmlFor="email">Email</label>
@@ -136,8 +182,11 @@ export default function Login() {
               onChange={handleInputChange}
               className={errors.email ? 'error' : ''}
               disabled={loading}
+              aria-label="Email address"
+              aria-invalid={!!errors.email}
+              aria-describedby={errors.email ? 'email-error' : undefined}
             />
-            {errors.email && <span className="field-error">{errors.email}</span>}
+            {errors.email && <span id="email-error" className="field-error" role="alert">{errors.email}</span>}
           </div>
           
           <div className="form-group">
@@ -150,8 +199,11 @@ export default function Login() {
               onChange={handleInputChange}
               className={errors.password ? 'error' : ''}
               disabled={loading}
+              aria-label="Password"
+              aria-invalid={!!errors.password}
+              aria-describedby={errors.password ? 'password-error' : undefined}
             />
-            {errors.password && <span className="field-error">{errors.password}</span>}
+            {errors.password && <span id="password-error" className="field-error" role="alert">{errors.password}</span>}
             {isSignup && (
               <div className="password-hint">
                 Password must be at least 6 characters.
@@ -164,6 +216,7 @@ export default function Login() {
                 checked={showPassword}
                 onChange={() => setShowPassword(v => !v)}
                 className="see-password-checkbox"
+                aria-label="Show password"
               />
               <label htmlFor="seePassword" className="see-password-label">
                 Show password
@@ -182,12 +235,24 @@ export default function Login() {
                 onChange={handleInputChange}
                 className={errors.confirmPassword ? 'error' : ''}
                 disabled={loading}
+                aria-label="Confirm password"
+                aria-invalid={!!errors.confirmPassword}
+                aria-describedby={errors.confirmPassword ? 'confirm-password-error' : undefined}
               />
-              {errors.confirmPassword && <span className="field-error">{errors.confirmPassword}</span>}
+              {errors.confirmPassword && (
+                <span id="confirm-password-error" className="field-error" role="alert">
+                  {errors.confirmPassword}
+                </span>
+              )}
             </div>
           )}
           
-          <button type="submit" className="submit-button" disabled={loading}>
+          <button 
+            type="submit" 
+            className="submit-button" 
+            disabled={loading}
+            aria-label={loading ? 'Please wait...' : (isSignup ? 'Create account' : 'Sign in')}
+          >
             {loading ? 'Please wait...' : (isSignup ? 'Create Account' : 'Sign In')}
           </button>
         </form>
@@ -202,6 +267,7 @@ export default function Login() {
               style={{ fontSize: '1rem', color: '#4e9af1', margin: 0, padding: 0 }}
               onClick={() => setShowForgot(true)}
               disabled={loading}
+              aria-label="Forgot password?"
             >
               Forgot password?
             </button>
@@ -220,6 +286,7 @@ export default function Login() {
                 setErrors({});
               }}
               disabled={loading}
+              aria-label={isSignup ? 'Switch to sign in' : 'Switch to sign up'}
             >
               {isSignup ? 'Sign In' : 'Sign Up'}
             </button>
