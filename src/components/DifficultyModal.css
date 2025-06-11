@@ -1,0 +1,194 @@
+:root {
+    --modal-bg: rgba(44, 62, 80, 0.9);
+    --modal-box: var(--box);
+    --modal-text: var(--text);
+    --modal-border: var(--text);
+    --modal-shadow: 0 20px 60px rgba(0,0,0,0.4);
+  }
+  
+  .modal-backdrop {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    width: 100vw;
+    height: 100vh;
+    background: var(--modal-bg);
+    backdrop-filter: blur(8px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2000;
+    animation: fadeIn 0.3s ease-out;
+  }
+  
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+  
+  .difficulty-modal {
+    background: var(--modal-box);
+    color: var(--modal-text);
+    border: 3px solid var(--modal-border);
+    border-radius: 24px;
+    box-shadow: var(--modal-shadow);
+    min-width: 440px;
+    max-width: 95vw;
+    padding: 2.5rem 2.5rem 2rem 2.5rem;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    animation: modalPop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    transform-origin: center;
+    overflow: hidden;
+  }
+  
+  @keyframes modalPop {
+    from { 
+      transform: scale(0.8) translateY(-20px); 
+      opacity: 0; 
+    }
+    to { 
+      transform: scale(1) translateY(0); 
+      opacity: 1; 
+    }
+  }
+  
+  .modal-header h2 {
+    font-family: 'Bebas Neue', Arial, sans-serif;
+    font-size: 2.2rem;
+    margin: 0 0 2rem 0;
+    text-align: center;
+    letter-spacing: 2px;
+    color: var(--modal-text);
+  }
+  
+  .modal-close {
+    position: absolute;
+    top: 1.2rem;
+    right: 1.2rem;
+    background: rgba(255,255,255,0.1);
+    border: 2px solid rgba(0,0,0,0.1);
+    font-size: 1.8rem;
+    color: var(--modal-text);
+    cursor: pointer;
+    transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1), color 0.2s, background 0.2s;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(10px);
+  }
+  
+  .modal-close:hover,
+  .modal-close:focus {
+    background: rgba(231, 76, 60, 0.2);
+    color: #e74c3c;
+    border-color: #e74c3c;
+    outline: none;
+    transform: rotate(450deg) scale(1.1);
+  }
+  
+  .difficulty-columns {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+    width: 100%;
+  }
+  
+  .difficulty-column {
+    background: var(--box);
+    border-radius: 14px;
+    border: 2.5px solid transparent;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.10);
+    transition: background 0.22s, border 0.22s, box-shadow 0.22s, color 0.22s;
+    cursor: pointer;
+    margin-bottom: 0.2rem;
+    padding: 0.8rem 1.2rem;
+    position: relative;
+    min-height: 52px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  
+  .difficulty-header {
+    font-family: 'Bebas Neue', Arial, sans-serif;
+    font-size: 1.35rem;
+    font-weight: 600;
+    letter-spacing: 2px;
+    margin-bottom: 0.2rem;
+  }
+  
+  .difficulty-column.expanded {
+    min-height: 140px;
+    background: #fff;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+    border-color: inherit;
+    z-index: 2;
+    padding-bottom: 1.2rem;
+  }
+  
+  .difficulty-info {
+    margin-top: 0.6rem;
+    padding-left: 0.3rem;
+    font-size: 1.05rem;
+    color: #222;
+    animation: fadeIn 0.25s;
+  }
+  
+  .difficulty-info ul {
+    padding: 0 0 0 1.2rem;
+    margin: 0 0 1rem 0;
+    list-style: disc;
+  }
+  
+  .start-game-btn {
+    margin-top: 0.6rem;
+    border: none;
+    border-radius: 8px;
+    font-family: 'Bebas Neue', Arial, sans-serif;
+    font-size: 1.08rem;
+    padding: 0.7rem 1.4rem;
+    cursor: pointer;
+    font-weight: 600;
+    letter-spacing: 1.2px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+    transition: background 0.16s, color 0.16s, transform 0.12s;
+  }
+  
+  .start-game-btn:hover,
+  .start-game-btn:focus {
+    filter: brightness(1.1);
+    transform: scale(1.06);
+    outline: none;
+  }
+  
+  .difficulty-header,
+  .difficulty-info,
+  .difficulty-info ul,
+  .difficulty-info li {
+    color: #fff !important;
+  }
+  
+  .difficulty-btn,
+  .difficulty-btn * {
+    color: #fff !important;
+  }
+  
+  @media (max-width: 600px) {
+    .difficulty-modal {
+      min-width: 92vw;
+      padding: 1.2rem 0.5rem 1.2rem 0.5rem;
+    }
+    .difficulty-column {
+      padding: 0.7rem 0.4rem;
+    }
+    .start-game-btn {
+      width: 90vw;
+      font-size: 1.02rem;
+    }
+  }
+  

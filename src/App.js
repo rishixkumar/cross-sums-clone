@@ -10,20 +10,20 @@
 import React, { useState } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { useEffect } from 'react';
-import Board from './Board';
 import Header from './components/Header';
 import Profile from './pages/Profile';
 import Scores from './pages/Scores';
 import Login from './pages/Login';
 import PrivateRoute from './components/PrivateRoute';
 import Settings from './pages/Settings';
+import DifficultyModal from './components/DifficultyModal';
 import './App.css';
 
 /**
  * Game component that renders the main game interface
  * 
  * @component
- * @returns {JSX.Element} Rendered game interface with board and controls
+ * @returns {JSX.Element} Rendered game interface with controls
  * 
  * @example
  * <Game />
@@ -31,65 +31,102 @@ import './App.css';
 function Game() {
   /** @type {[boolean, function]} State to control eraser mode */
   const [isEraserMode, setIsEraserMode] = useState(false);
+  /** @type {[boolean, function]} State to control difficulty modal visibility */
+  const [showDifficultyModal, setShowDifficultyModal] = useState(false);
+  /** @type {[string|null, function]} State to control success message */
+  const [successMsg, setSuccessMsg] = useState(null);
+  /** @type {[string, function]} State to control success message color */
+  const [successColor, setSuccessColor] = useState("#2ecc40");
 
-  /**
-   * Sample game grid data
-   * @type {Array<Array<number>>}
-   */
-  const grid = [
-    [5, 1, 6, 2],
-    [8, 2, 4, 2],
-    [2, 2, 2, 6],
-    [1, 9, 9, 2],
-  ];
-
-  /** @type {Array<number>} Target sums for each row */
-  const rowLabels = [1, 2, 4, 3];
-  
-  /** @type {Array<number>} Target sums for each column */
-  const colLabels = [3, 3, 2, 2];
+  // Show a temporary message
+  const handleStartGame = (key, label, color) => {
+    setShowDifficultyModal(false);
+    setSuccessMsg(`New ${label} Game Started!`);
+    setSuccessColor(color);
+    setTimeout(() => setSuccessMsg(null), 2500);
+    // Here you would also trigger game generation logic
+  };
 
   return (
     <div className="App">
       <div className="game-container">
-        {/* Lives display */}
-        <div className="hearts-container" role="status" aria-label="Remaining lives">
-          <div className="heart"></div>
-          <div className="heart"></div>
-          <div className="heart"></div>
-        </div>
-        
-        {/* Game board */}
-        <Board size={4} rowLabels={rowLabels} colLabels={colLabels} grid={grid} />
-        
-        {/* Tool toggle */}
-        <div className="toggle-container" role="toolbar" aria-label="Game tools">
-          <div className="toggle-slider">
-            <div
-              className={`toggle-highlight ${isEraserMode ? 'left' : 'right'}`}
-              aria-hidden="true"
-            ></div>
-            <div
-              className={`toggle-option eraser${isEraserMode ? ' active' : ''}`}
-              onClick={() => setIsEraserMode(true)}
-              role="button"
-              aria-pressed={isEraserMode}
-              aria-label="Eraser tool"
-            >
-              <div className="trash-icon"></div>
+        {/* Board section with side panel and board */}
+        <div className="board-section">
+          <div className="side-panel">
+            <div className="hearts-container" role="status" aria-label="Remaining lives">
+              <div className="heart"></div>
+              <div className="heart"></div>
+              <div className="heart"></div>
             </div>
-            <div
-              className={`toggle-option pen${!isEraserMode ? ' active' : ''}`}
-              onClick={() => setIsEraserMode(false)}
-              role="button"
-              aria-pressed={!isEraserMode}
-              aria-label="Pen tool"
+            <button
+              className="new-game-btn"
+              onClick={() => setShowDifficultyModal(true)}
             >
-              <div className="pencil-icon"></div>
+              New Game
+            </button>
+            <div className="toggle-container" role="toolbar" aria-label="Game tools">
+              <div className="toggle-slider">
+                <div
+                  className={`toggle-highlight ${isEraserMode ? 'left' : 'right'}`}
+                  aria-hidden="true"
+                ></div>
+                <div
+                  className={`toggle-option eraser${isEraserMode ? ' active' : ''}`}
+                  onClick={() => setIsEraserMode(true)}
+                  role="button"
+                  aria-pressed={isEraserMode}
+                  aria-label="Eraser tool"
+                >
+                  <div className="trash-icon"></div>
+                </div>
+                <div
+                  className={`toggle-option pen${!isEraserMode ? ' active' : ''}`}
+                  onClick={() => setIsEraserMode(false)}
+                  role="button"
+                  aria-pressed={!isEraserMode}
+                  aria-label="Pen tool"
+                >
+                  <div className="pencil-icon"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="game-board-placeholder">
+            <div className="board-placeholder-content">
+              Game Board Coming Soon
             </div>
           </div>
         </div>
       </div>
+      {showDifficultyModal && (
+        <DifficultyModal
+          onClose={() => setShowDifficultyModal(false)}
+          onSelect={handleStartGame}
+        />
+      )}
+      {successMsg && (
+        <div
+          style={{
+            position: "fixed",
+            top: "90px",
+            left: "50%",
+            transform: "translateX(-50%)",
+            background: "#fff",
+            color: successColor,
+            fontFamily: "'Bebas Neue', Arial, sans-serif",
+            fontSize: "1.4rem",
+            padding: "1rem 2.5rem",
+            borderRadius: "14px",
+            boxShadow: "0 4px 16px rgba(0,0,0,0.10)",
+            letterSpacing: "1.5px",
+            zIndex: 3000,
+            border: `2.5px solid ${successColor}`,
+            animation: "fadeIn 0.2s, fadeOut 0.4s 2.1s"
+          }}
+        >
+          {successMsg}
+        </div>
+      )}
     </div>
   );
 }
